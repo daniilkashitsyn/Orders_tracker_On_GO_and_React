@@ -11,7 +11,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @titile React + Go Orders tracker
+// @title React + Go Orders tracker
 
 func main() {
 	err := database.InitDb()
