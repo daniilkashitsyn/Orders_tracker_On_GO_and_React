@@ -11,7 +11,9 @@ info:
 paths:
   /books:
     get:
-      description: Read all books from table.
+      consumes:
+      - application/json
+      description: Возвращает все книги из базы данных
       produces:
       - application/json
       responses:
@@ -21,7 +23,13 @@ paths:
             items:
               $ref: '#/definitions/models.Book'
             type: array
-      summary: Get books array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Получить список книг
       tags:
       - books
 swagger: "2.0"

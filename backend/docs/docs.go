@@ -17,14 +17,17 @@ const docTemplate = `{
     "paths": {
         "/books": {
             "get": {
-                "description": "Read all books from table.",
+                "description": "Возвращает все книги из базы данных",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "books"
                 ],
-                "summary": "Get books array",
+                "summary": "Получить список книг",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -32,6 +35,15 @@ const docTemplate = `{
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/models.Book"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
                             }
                         }
                     }

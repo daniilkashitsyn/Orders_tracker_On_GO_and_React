@@ -13,15 +13,6 @@ import (
 
 // @titile React + Go Orders tracker
 
-// GetBooks godoc
-// @Summary Получить список книг
-// @Description Возвращает все книги из базы данных
-// @Tags books
-// @Accept  json
-// @Produce  json
-// @Success 200 {array} models.Book
-// @Failure 500 {object} map[string]string
-// @Router /api/books [get]
 func main() {
 	err := database.InitDb()
 	if err != nil {
@@ -39,6 +30,15 @@ func main() {
 	router.Run(":8080")
 }
 
+// GetBooks godoc
+// @Summary Получить список книг
+// @Description Возвращает все книги из базы данных
+// @Tags books
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.Book
+// @Failure 500 {object} map[string]string
+// @Router /books [get]
 func getBooks(c *gin.Context) {
 	books, err := database.GetBooks()
 

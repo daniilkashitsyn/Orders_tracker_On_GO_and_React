@@ -1,6 +1,7 @@
 package database
 
 import (
+	"backend/internal/models"
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
@@ -25,12 +26,13 @@ func InitDb() error {
 	return nil
 }
 
-func GetBooks() {
+func GetBooks() ([]models.Book, error) {
+	var books []models.Book
 	rows, err := DB.Query("select * from books")
 
 	if err != nil {
 		fmt.Printf("error querying books: %v", err)
-		return
+		return nil, err
 	}
 	defer rows.Close()
 	for rows.Next() {
@@ -42,7 +44,12 @@ func GetBooks() {
 			fmt.Printf("error scanning row: %v", err)
 			continue
 		}
-		fmt.Printf("id: %v, name: %v\n", id, name)
-	}
+		var book models.Book
 
+		book.ID = id
+		book.Title = name
+
+		books = append(books, book)
+	}
+	return books, nil
 }
