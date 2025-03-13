@@ -13,13 +13,15 @@ import (
 
 // @titile React + Go Orders tracker
 
-// GetBooks             godoc
-// @Summary      Get books array
-// @Description  Read all books from table.
-// @Tags         books
-// @Produce      json
-// @Success      200  {array}  models.Book
-// @Router       /books [get]
+// GetBooks godoc
+// @Summary Получить список книг
+// @Description Возвращает все книги из базы данных
+// @Tags books
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.Book
+// @Failure 500 {object} map[string]string
+// @Router /api/books [get]
 func main() {
 	err := database.InitDb()
 	if err != nil {

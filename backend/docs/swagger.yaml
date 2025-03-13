@@ -1,0 +1,27 @@
+definitions:
+  models.Book:
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /books:
+    get:
+      description: Read all books from table.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Book'
+            type: array
+      summary: Get books array
+      tags:
+      - books
+swagger: "2.0"
