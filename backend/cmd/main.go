@@ -1,11 +1,10 @@
 package main
 
 import (
-	"backend/internal/database"
-	"fmt"
-	"net/http"
-
 	_ "backend/docs"
+	"backend/internal/database"
+	"backend/internal/handlers"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -20,31 +19,26 @@ func main() {
 	}
 
 	router := gin.Default()
+	router.Use(func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin", "*")
+	})
 
 	router.Group("/*")
 	{
-		router.GET("/books", getBooks)
+		router.GET(
+			"/books",
+			handlers.GetBooks,
+		)
+		router.GET(
+			"/clients",
+			handlers.GetClients,
+		)
+
 		router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 
-	router.Run(":8080")
-}
-
-// GetBooks godoc
-// @Summary Получить список книг
-// @Description Возвращает все книги из базы данных
-// @Tags books
-// @Accept  json
-// @Produce  json
-// @Success 200 {array} models.Book
-// @Failure 500 {object} map[string]string
-// @Router /books [get]
-func getBooks(c *gin.Context) {
-	books, err := database.GetBooks()
-
+	err = router.Run(":8080")
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
-		return
+		fmt.Println(err)
 	}
-	c.JSON(http.StatusOK, books)
 }

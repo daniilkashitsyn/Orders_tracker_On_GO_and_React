@@ -53,3 +53,46 @@ func GetBooks() ([]models.Book, error) {
 	}
 	return books, nil
 }
+
+func AddBook(book models.Book) error {
+	_, err := DB.Exec("insert into books(id, title) values(?, ?)", book.ID, book.Title)
+
+	if err != nil {
+		return fmt.Errorf("error inserting book: %v", err)
+	}
+
+	return nil
+}
+
+func GetClients(query string) ([]models.Client, error) {
+	var clients []models.Client
+
+	rows, err := DB.Query(query)
+	// rows, err := DB.Query("select * from clients order by ration")
+
+	if err != nil {
+		fmt.Printf("error querying clients: %v", err)
+		return nil, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var client models.Client
+
+		err := rows.Scan(&client.ID, &client.Name, &client.Adress, &client.Ration, &client.PhoneNumber)
+
+		if err != nil {
+			fmt.Printf("error scanning row: %v", err)
+			continue
+		}
+		var clientAdd models.Client
+
+		clientAdd.ID = client.ID
+		clientAdd.Name = client.Name
+		clientAdd.Adress = client.Adress
+		clientAdd.Ration = client.Ration
+		clientAdd.PhoneNumber = client.PhoneNumber
+
+		clients = append(clients, clientAdd)
+	}
+	return clients, nil
+}
