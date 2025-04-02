@@ -24,8 +24,10 @@ func GetClients(c *gin.Context) {
 	case "asc":
 		query = fmt.Sprintf("select * from clients order by ration")
 	case "desc":
+
 		query = fmt.Sprintf("select * from clients order by ration DESC")
 	default:
+
 		query = fmt.Sprintf("select * from clients")
 	}
 
@@ -37,3 +39,14 @@ func GetClients(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, clients)
 }
+
+//func DeleteClient(c *gin.Context) {
+//	var id int = c.DefaultQuery("id", "default")
+//
+//	err := database.DeleteClient(id)
+//
+//	if err != nil {
+//		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+//	}
+//
+//}

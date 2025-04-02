@@ -96,3 +96,14 @@ func GetClients(query string) ([]models.Client, error) {
 	}
 	return clients, nil
 }
+
+func DeleteClient(id int) error {
+	_, err := DB.Exec("delete from clients where id=?", id)
+
+	if err != nil {
+		fmt.Printf("error deleting client: %v", err)
+		return err
+	}
+
+	return nil
+}

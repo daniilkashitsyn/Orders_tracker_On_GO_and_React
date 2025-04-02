@@ -26,13 +26,13 @@ func main() {
 	router.Group("/*")
 	{
 		router.GET(
-			"/books",
-			handlers.GetBooks,
-		)
-		router.GET(
 			"/clients",
 			handlers.GetClients,
 		)
+		//router.DELETE(
+		//	"/clients",
+		//	handlers.DeleteClient,
+		//)
 
 		router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}

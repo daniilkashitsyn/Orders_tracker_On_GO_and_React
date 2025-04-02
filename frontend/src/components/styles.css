@@ -1,0 +1,7 @@
+.navbar-nav li {
+    padding-right: 50px;
+}
+
+.nav-link:active {
+    color: red;
+}

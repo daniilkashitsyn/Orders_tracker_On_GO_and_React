@@ -1,0 +1,9 @@
+#clientDataBlock {
+    display: block;
+    width: 50vw;
+    height: 50vh;
+    background: linear-gradient(180deg, #60afad 0%, #5e2183 100%);
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
