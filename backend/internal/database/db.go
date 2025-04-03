@@ -26,44 +26,6 @@ func InitDb() error {
 	return nil
 }
 
-//func GetBooks() ([]models.Book, error) {
-//	var books []models.Book
-//	rows, err := DB.Query("select * from books")
-//
-//	if err != nil {
-//		fmt.Printf("error querying books: %v", err)
-//		return nil, err
-//	}
-//	defer rows.Close()
-//	for rows.Next() {
-//		var id int
-//		var name string
-//		err := rows.Scan(&id, &name)
-//
-//		if err != nil {
-//			fmt.Printf("error scanning row: %v", err)
-//			continue
-//		}
-//		var book models.Book
-//
-//		book.ID = id
-//		book.Title = name
-//
-//		books = append(books, book)
-//	}
-//	return books, nil
-//}
-
-func AddBook(book models.Book) error {
-	_, err := DB.Exec("insert into books(id, title) values(?, ?)", book.ID, book.Title)
-
-	if err != nil {
-		return fmt.Errorf("error inserting book: %v", err)
-	}
-
-	return nil
-}
-
 func GetClients(query string) ([]models.Client, error) {
 	var clients []models.Client
 
@@ -73,7 +35,12 @@ func GetClients(query string) ([]models.Client, error) {
 		fmt.Printf("error querying clients: %v", err)
 		return nil, err
 	}
-	defer rows.Close()
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+			fmt.Printf("error closing rows: %v", err)
+		}
+	}(rows)
 	for rows.Next() {
 		var client models.Client
 
@@ -108,12 +75,25 @@ func DeleteClient(id string) error {
 }
 
 func CreateClient(client models.Client) error {
-	_, err := DB.Exec("insert into clients values(?, ?, ?, ?, ?)",
-		client.ID, client.Name, client.Address, client.Ration, client.PhoneNumber,
+	_, err := DB.Exec("insert into clients(name, address, ration, phone_number) values(?, ?, ?, ?)",
+		client.Name, client.Address, client.Ration, client.PhoneNumber,
 	)
 
 	if err != nil {
 		fmt.Printf("error inserting client: %v", err)
+		return err
+	}
+
+	return nil
+}
+
+func UpdateClient(client models.Client) error {
+	_, err := DB.Exec("update clients set name=?, address=?, ration=?, phone_number=? where id=?",
+		client.Name, client.Address, client.Ration, client.PhoneNumber, client.ID,
+	)
+
+	if err != nil {
+		fmt.Printf("error updating client: %v", err)
 		return err
 	}
 

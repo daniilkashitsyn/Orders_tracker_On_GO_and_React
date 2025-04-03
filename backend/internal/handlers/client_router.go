@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 func GetClients(c *gin.Context) {
@@ -65,6 +66,33 @@ func CreateClient(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"Message": "Client was successfully created",
+		"client":  client,
+	})
+}
+
+func UpdateClient(c *gin.Context) {
+	id := c.Param("id")
+
+	var client models.Client
+	client.ID, _ = strconv.Atoi(id)
+
+	if err := c.ShouldBindJSON(&client); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error with client data": err,
+		})
+		return
+	}
+
+	err := database.UpdateClient(client)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error with update client": err,
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"Message": "Client was successfully updated",
 		"client":  client,
 	})
 }
