@@ -26,33 +26,33 @@ func InitDb() error {
 	return nil
 }
 
-func GetBooks() ([]models.Book, error) {
-	var books []models.Book
-	rows, err := DB.Query("select * from books")
-
-	if err != nil {
-		fmt.Printf("error querying books: %v", err)
-		return nil, err
-	}
-	defer rows.Close()
-	for rows.Next() {
-		var id int
-		var name string
-		err := rows.Scan(&id, &name)
-
-		if err != nil {
-			fmt.Printf("error scanning row: %v", err)
-			continue
-		}
-		var book models.Book
-
-		book.ID = id
-		book.Title = name
-
-		books = append(books, book)
-	}
-	return books, nil
-}
+//func GetBooks() ([]models.Book, error) {
+//	var books []models.Book
+//	rows, err := DB.Query("select * from books")
+//
+//	if err != nil {
+//		fmt.Printf("error querying books: %v", err)
+//		return nil, err
+//	}
+//	defer rows.Close()
+//	for rows.Next() {
+//		var id int
+//		var name string
+//		err := rows.Scan(&id, &name)
+//
+//		if err != nil {
+//			fmt.Printf("error scanning row: %v", err)
+//			continue
+//		}
+//		var book models.Book
+//
+//		book.ID = id
+//		book.Title = name
+//
+//		books = append(books, book)
+//	}
+//	return books, nil
+//}
 
 func AddBook(book models.Book) error {
 	_, err := DB.Exec("insert into books(id, title) values(?, ?)", book.ID, book.Title)
@@ -68,7 +68,6 @@ func GetClients(query string) ([]models.Client, error) {
 	var clients []models.Client
 
 	rows, err := DB.Query(query)
-	// rows, err := DB.Query("select * from clients order by ration")
 
 	if err != nil {
 		fmt.Printf("error querying clients: %v", err)
@@ -78,7 +77,7 @@ func GetClients(query string) ([]models.Client, error) {
 	for rows.Next() {
 		var client models.Client
 
-		err := rows.Scan(&client.ID, &client.Name, &client.Adress, &client.Ration, &client.PhoneNumber)
+		err := rows.Scan(&client.ID, &client.Name, &client.Address, &client.Ration, &client.PhoneNumber)
 
 		if err != nil {
 			fmt.Printf("error scanning row: %v", err)
@@ -88,7 +87,7 @@ func GetClients(query string) ([]models.Client, error) {
 
 		clientAdd.ID = client.ID
 		clientAdd.Name = client.Name
-		clientAdd.Adress = client.Adress
+		clientAdd.Address = client.Address
 		clientAdd.Ration = client.Ration
 		clientAdd.PhoneNumber = client.PhoneNumber
 
@@ -97,11 +96,24 @@ func GetClients(query string) ([]models.Client, error) {
 	return clients, nil
 }
 
-func DeleteClient(id int) error {
+func DeleteClient(id string) error {
 	_, err := DB.Exec("delete from clients where id=?", id)
 
 	if err != nil {
 		fmt.Printf("error deleting client: %v", err)
+		return err
+	}
+
+	return nil
+}
+
+func CreateClient(client models.Client) error {
+	_, err := DB.Exec("insert into clients values(?, ?, ?, ?, ?)",
+		client.ID, client.Name, client.Address, client.Ration, client.PhoneNumber,
+	)
+
+	if err != nil {
+		fmt.Printf("error inserting client: %v", err)
 		return err
 	}
 

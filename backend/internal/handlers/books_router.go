@@ -7,24 +7,24 @@ import (
 	"net/http"
 )
 
-// GetBooks godoc
-// @Summary Получить список книг
-// @Description Возвращает все книги из базы данных
-// @Tags books
-// @Accept  json
-// @Produce  json
-// @Success 200 {array} models.Book
-// @Failure 500 {object} map[string]string
-// @Router /books [get]
-func GetBooks(c *gin.Context) {
-	books, err := database.GetBooks()
-
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
-		return
-	}
-	c.JSON(http.StatusOK, books)
-}
+//// GetBooks godoc
+//// @Summary Получить список книг
+//// @Description Возвращает все книги из базы данных
+//// @Tags books
+//// @Accept  json
+//// @Produce  json
+//// @Success 200 {array} models.Book
+//// @Failure 500 {object} map[string]string
+//// @Router /books [get]
+//func GetBooks(c *gin.Context) {
+//	books, err := database.GetBooks()
+//
+//	if err != nil {
+//		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+//		return
+//	}
+//	c.JSON(http.StatusOK, books)
+//}
 
 // AddBook UpdateBook godoc
 // @Summary Добваить книгу

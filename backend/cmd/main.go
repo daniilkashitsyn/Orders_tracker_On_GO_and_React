@@ -1,13 +1,10 @@
 package main
 
 import (
-	_ "backend/docs"
 	"backend/internal/database"
 	"backend/internal/handlers"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // @title React + Go Orders tracker
@@ -29,12 +26,16 @@ func main() {
 			"/clients",
 			handlers.GetClients,
 		)
-		//router.DELETE(
-		//	"/clients",
-		//	handlers.DeleteClient,
-		//)
 
-		router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+		router.DELETE(
+			"/client/del/:id",
+			handlers.DeleteClient,
+		)
+
+		router.POST(
+			"/clients/add",
+			handlers.CreateClient,
+		)
 	}
 
 	err = router.Run(":8080")

@@ -2,19 +2,12 @@ package handlers
 
 import (
 	"backend/internal/database"
+	"backend/internal/models"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-// GetClients godoc
-// @Summary Получить список Клиентов
-// @Tags clients
-// @Accept  json
-// @Produce  json
-// @Success 200 {array} models.Client
-// @Failure 500 {object} map[string]string
-// @Router /clients [get]
 func GetClients(c *gin.Context) {
 	sort := c.DefaultQuery("sort", "default")
 
@@ -40,13 +33,38 @@ func GetClients(c *gin.Context) {
 	c.JSON(http.StatusOK, clients)
 }
 
-//func DeleteClient(c *gin.Context) {
-//	var id int = c.DefaultQuery("id", "default")
-//
-//	err := database.DeleteClient(id)
-//
-//	if err != nil {
-//		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
-//	}
-//
-//}
+func DeleteClient(c *gin.Context) {
+	id := c.Param("id")
+
+	err := database.DeleteClient(id)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"id of deleted client": id})
+}
+
+func CreateClient(c *gin.Context) {
+	var client models.Client
+
+	if err := c.ShouldBindJSON(&client); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error with client data": err,
+		})
+		return
+	}
+
+	err := database.CreateClient(client)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error with insert client": err,
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"Message": "Client was successfully created",
+		"client":  client,
+	})
+}
