@@ -1,0 +1,31 @@
+### POST request to add client
+POST http://localhost:8080/clients/add
+Content-Type: application/json
+
+{
+  "name": "Test1",
+  "address": "Test 2",
+  "ration": "1500",
+  "phone_number": "+77777777"
+}
+
+### GET request to get all clients
+GET http://localhost:8080/clients?sort=asc
+Content-Type: application/json
+
+#### GET request to get client by id
+#GET http://localhost:8080/clients/1
+#Content-Type: application/json
+
+### DELETE request to delete client by id
+DELETE http://localhost:8080/client/del/1
+Content-Type: application/json
+
+### PUT request to update client by id
+PUT localhost:8080/clients/upd/1
+Content-Type: application/json
+
+{
+  "name": "Alexey",
+  "address": "kirova 1"
+}

@@ -63,6 +63,34 @@ func GetClients(query string) ([]models.Client, error) {
 	return clients, nil
 }
 
+//func GetClientByID(id string) (models.Client, error) {
+//	var client models.Client
+//
+//	row, err := DB.Query("select * from clients where id=?", id)
+//
+//	if err != nil {
+//		fmt.Printf("error querying clients: %v", err)
+//		return client, err
+//	}
+//
+//	err = row.Scan(&client.ID, &client.Name, &client.Address, &client.Ration, &client.PhoneNumber).Next()
+//
+//	if err != nil {
+//		fmt.Printf("error scanning row: %v", err)
+//		return client, err
+//	}
+//
+//	var clientAdd models.Client
+//
+//	clientAdd.ID = client.ID
+//	clientAdd.Name = client.Name
+//	clientAdd.Address = client.Address
+//	clientAdd.Ration = client.Ration
+//	clientAdd.PhoneNumber = client.PhoneNumber
+//
+//	return clientAdd, nil
+//}
+
 func DeleteClient(id string) error {
 	_, err := DB.Exec("delete from clients where id=?", id)
 
@@ -88,6 +116,7 @@ func CreateClient(client models.Client) error {
 }
 
 func UpdateClient(client models.Client) error {
+
 	_, err := DB.Exec("update clients set name=?, address=?, ration=?, phone_number=? where id=?",
 		client.Name, client.Address, client.Ration, client.PhoneNumber, client.ID,
 	)

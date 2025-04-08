@@ -96,3 +96,21 @@ func UpdateClient(c *gin.Context) {
 		"client":  client,
 	})
 }
+
+//func GetClientById(c *gin.Context) {
+//	id := c.Param("id")
+//
+//	var client models.Client
+//
+//	client, err := database.GetClientByID(id)
+//
+//	if err != nil {
+//		c.JSON(http.StatusInternalServerError, err)
+//		return
+//	}
+//
+//	c.JSON(http.StatusOK, gin.H{
+//		"message": "Client was successfully retrieved",
+//		"client":  client,
+//	})
+//}

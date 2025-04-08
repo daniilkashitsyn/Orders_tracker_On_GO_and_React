@@ -41,6 +41,11 @@ func main() {
 			"/clients/upd/:id",
 			handlers.UpdateClient,
 		)
+
+		//router.GET(
+		//	"/clients/:id",
+		//	handlers.GetClientById,
+		//)
 	}
 
 	err = router.Run(":8080")

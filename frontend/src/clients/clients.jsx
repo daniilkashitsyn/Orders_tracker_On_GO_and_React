@@ -7,7 +7,7 @@ const Clients = () => {
 
     useEffect(() => {
         console.log("Клиенты подключены")
-        fetch('http://localhost:8080/clients')
+        fetch('http://localhost:8080/clients?sort=a sc')
             .then((response) => response.json())
             .then((data) => {
                console.log("Клиенты: ", data)
@@ -26,21 +26,6 @@ const Clients = () => {
                 return 'badge bg-success'
         }
     }
-
-    // const sortByRations = (sort) => {
-    //     switch (sort) {
-    //         case "asc":
-    //             fetch('http://localhost:8080/clients?sort=asc')
-    //                 .then((response ) => response.json())
-    //                 .then((data) => {
-    //                     setClients(data)
-    //                 })
-    //                 .catch((error) => {console.error("Error with filter: ", error)})
-    //             break
-    //         case "desc":
-    //             fetch()
-    //     }
-    // }
 
     return (
         <React.Fragment>

@@ -7,9 +7,10 @@ const AddClient = () => {
 
     return (
         <React.Fragment>
-            <div className="main-container">
-                <div id="clientDataBlock">
-                    sklna
+            <h2 className="w-25 mx-auto">Добавление клиента</h2>
+            <div className="container col-md-1 mx-auto">
+                <div className="border border-4">
+                    Test
                 </div>
             </div>
         </React.Fragment>

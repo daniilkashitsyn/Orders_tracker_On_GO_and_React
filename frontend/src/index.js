@@ -13,7 +13,7 @@ const APP = () => {
             <Navigation></Navigation>
             <Routes>
                 <Route path="/clients" element={<Clients />}></Route>
-                <Route path="/clients/addClient" element={<AddClient />}></Route>
+                <Route path="/clients/add" element={<AddClient />}></Route>
             </Routes>
         </Router>
     )
