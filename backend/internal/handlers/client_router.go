@@ -3,6 +3,7 @@ package handlers
 import (
 	"backend/internal/database"
 	"backend/internal/models"
+	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -97,20 +98,29 @@ func UpdateClient(c *gin.Context) {
 	})
 }
 
-//func GetClientById(c *gin.Context) {
-//	id := c.Param("id")
-//
-//	var client models.Client
-//
-//	client, err := database.GetClientByID(id)
-//
-//	if err != nil {
-//		c.JSON(http.StatusInternalServerError, err)
-//		return
-//	}
-//
-//	c.JSON(http.StatusOK, gin.H{
-//		"message": "Client was successfully retrieved",
-//		"client":  client,
-//	})
-//}
+func GetClientById(c *gin.Context) {
+	id := c.Param("id")
+
+	var client models.Client
+
+	client, err := database.GetClientByID(id)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "client not found",
+			})
+			return
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Client was successfully retrieved",
+		"client":  client,
+	})
+}

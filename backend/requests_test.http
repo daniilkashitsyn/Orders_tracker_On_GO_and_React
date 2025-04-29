@@ -14,15 +14,15 @@ GET http://localhost:8080/clients?sort=asc
 Content-Type: application/json
 
 #### GET request to get client by id
-#GET http://localhost:8080/clients/1
-#Content-Type: application/json
+GET http://localhost:8080/clients/1
+Content-Type: application/json
 
 ### DELETE request to delete client by id
-DELETE http://localhost:8080/client/del/1
+DELETE http://localhost:8080/client/del/11
 Content-Type: application/json
 
 ### PUT request to update client by id
-PUT localhost:8080/clients/upd/1
+PUT localhost:8080/clients/upd/8
 Content-Type: application/json
 
 {
