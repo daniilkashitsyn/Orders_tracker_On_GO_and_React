@@ -10,12 +10,14 @@ Content-Type: application/json
 }
 
 ### GET request to get all clients
-GET http://localhost:8080/clients?sort=asc
+GET http://localhost:8080/clients
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImV4cCI6MTc0NjU1MDQyNH0.wZ_5Gufqew5vwSz_DLJhTR0g26gzj3SoInoK4azUOlA
 
 #### GET request to get client by id
-GET http://localhost:8080/clients/1
+GET http://localhost:8080/clients/9
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzQ2NTUwNTQ5fQ.yTQ9WiXvKz37JarFsFJM1snYwFXWUP2gCX9poEF3z4I
 
 ### DELETE request to delete client by id
 DELETE http://localhost:8080/client/del/11
@@ -28,4 +30,13 @@ Content-Type: application/json
 {
   "name": "Alexey",
   "address": "kirova 1"
+}
+
+### POST request to login
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
 }

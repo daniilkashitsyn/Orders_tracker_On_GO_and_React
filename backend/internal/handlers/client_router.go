@@ -52,7 +52,7 @@ func CreateClient(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&client); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error with client data": err,
+			"error with client data": err.Error(),
 		})
 		return
 	}

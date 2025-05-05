@@ -3,6 +3,7 @@ package main
 import (
 	"backend/internal/database"
 	"backend/internal/handlers"
+	"backend/internal/auth"
 	"fmt"
 	"github.com/gin-gonic/gin"
 )
@@ -16,33 +17,41 @@ func main() {
 	}
 
 	router := gin.Default()
-	router.Use(func(c *gin.Context) {
-		c.Header("Access-Control-Allow-Origin", "*")
-	})
 
-	router.Group("/*")
+	router.POST(
+		"/login",
+		auth.Login,
+	)
+	protected := router.Group("/")
+	//router.Use(func(c *gin.Context) {
+	//	c.Header("Access-Control-Allow-Origin", "*")
+	//})
+	protected.Use(auth.AuthMiddleware())
+	protected.Use(auth.RoleBasedAccess())
+
+	protected.Group("/*")
 	{
-		router.GET(
+		protected.GET(
 			"/clients",
 			handlers.GetClients,
 		)
 
-		router.DELETE(
-			"/client/del/:id",
+		protected.DELETE(
+			"/clients/del/:id",
 			handlers.DeleteClient,
 		)
 
-		router.POST(
+		protected.POST(
 			"/clients/add",
 			handlers.CreateClient,
 		)
 
-		router.PUT(
+		protected.PUT(
 			"/clients/upd/:id",
 			handlers.UpdateClient,
 		)
 
-		router.GET(
+		protected.GET(
 			"/clients/:id",
 			handlers.GetClientById,
 		)
